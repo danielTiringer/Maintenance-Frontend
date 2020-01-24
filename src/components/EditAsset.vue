@@ -1,14 +1,14 @@
 <template>
 	<v-dialog max-width="600px" v-model="dialog">
 		<template v-slot:activator="{ on }">
-			<v-btn text class="success" v-on="on">Add new asset</v-btn>
+			<v-btn text class="success" v-on="on">Edit asset</v-btn>
 		</template>
 		<v-card>
 			<v-card-title>
-				<h2>Add a New Asset</h2>
+				<h2>Edit Asset</h2>
 			</v-card-title>
 			<v-card-text>
-				<v-form class="px-3" ref="newAssetForm">
+				<v-form class="px-3" ref="editAssetForm">
 					<v-text-field label="Asset Id" v-model="assetId" prepend-icon="folder" v-bind:rules="inputRules"></v-text-field>
 					<v-text-field label="Serial Number" v-model="serialNumber" prepend-icon="folder" v-bind:rules="inputRules"></v-text-field>
 					<v-menu max-width="290px">
@@ -81,7 +81,7 @@ export default {
 				await AssetService.createAsset(asset).then(() => {
 					this.loading = false
 					this.dialog = false
-					this.$emit('newAssetAdded')
+					this.$emit('assetEdited')
 				})
 			}
 		}
@@ -99,3 +99,4 @@ export default {
 
 <style scoped>
 </style>
+

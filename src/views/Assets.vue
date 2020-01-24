@@ -28,7 +28,7 @@
 			<p class="error" v-if="error">{{ error }}</p>
 
 			<v-card depressed v-for="asset in assets" v-bind:key="asset.assetId">
-				<Asset v-bind:asset="asset" />
+				<Asset @newAssetAdded="reloadAssets" v-bind:asset="asset" />
 				<v-divider></v-divider>
 			</v-card>
 		</v-container>
@@ -53,6 +53,13 @@ export default {
 		sortBy(property) {
 			this.assets.sort((a, b) => a[property] < b[property] ? -1 : 1)
 		},
+		async reloadAssets() {
+			try {
+				this.assets = await AssetService.getAssets()
+			} catch (error) {
+				this.error = error.message
+			}
+		}
 	},
 	async created() {
 		try {
