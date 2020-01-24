@@ -1,10 +1,10 @@
 <template>
-	<v-layout row wrap v-bind:class="pa-3">
-		<v-flex xs12 sm4 md6>
+	<v-layout row wrap v-bind:class="`pa-3 ml-2 asset`">
+		<v-flex xs8 sm4 md4>
 			<div class="caption grey--text">Asset ID</div>
 			<div>{{ asset.assetId }}</div>
 		</v-flex>
-		<v-flex xs4 sm2 md2>
+		<v-flex xs4 sm4 m4>
 			<div class="caption grey--text">Address</div>
 			<div>{{ asset.address }}</div>
 		</v-flex>
@@ -12,15 +12,8 @@
 			<div class="caption grey--text">Due By</div>
 			<div>{{ asset.nextScheduledDate }}</div>
 		</v-flex>
-		<v-flex xs6 sm2 md2>
-			<div class="right">
-				<v-chip
-				>
-				</v-chip>
-			</div>
-		</v-flex>
 		<v-flex row xs6 sm2 md2>
-			<div class="buttons" v-bind:key="button.icon" v-for="button in buttons" @click="button.method">
+			<div class="buttons" v-bind:key="button.icon" v-for="button in buttons" @click="this.deleteAsset(asset._id)">
 
 				<v-tooltip top>
 					<template v-slot:activator="{ on }">

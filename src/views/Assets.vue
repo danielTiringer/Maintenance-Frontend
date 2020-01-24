@@ -6,7 +6,7 @@
 			<v-layout row class="mb-3">
 				<v-tooltip top>
 					<template v-slot:activator="{ on }">
-						<v-btn small color="light-blue" class="ma-2" @click="sortBy('title')" v-on="on">
+						<v-btn small color="light-blue" class="ma-2" @click="sortBy('assetId')" v-on="on">
 							<v-icon left small>folder</v-icon>
 							<span class="caption text-capitalize">By Asset ID</span>
 						</v-btn>
@@ -16,7 +16,7 @@
 
 				<v-tooltip top>
 					<template v-slot:activator="{ on }">
-						<v-btn small color="light-blue" class="ma-2" @click="sortBy('status')" v-on="on">
+						<v-btn small color="light-blue" class="ma-2" @click="sortBy('nextScheduledDate')" v-on="on">
 							<v-icon left small>alarm</v-icon>
 							<span class="caption text-capitalize">By Due Date</span>
 						</v-btn>
@@ -51,12 +51,12 @@ export default {
 	},
 	methods: {
 		sortBy(property) {
-			this.projects.sort((a, b) => a[property] < b[property] ? -1 : 1)
+			this.assets.sort((a, b) => a[property] < b[property] ? -1 : 1)
 		},
 	},
 	async created() {
 		try {
-			this.projects = await AssetService.getAssets()
+			this.assets = await AssetService.getAssets()
 		} catch (error) {
 			this.error = error.message
 		}
