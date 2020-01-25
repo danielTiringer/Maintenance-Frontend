@@ -9,18 +9,18 @@
 			</v-card-title>
 			<v-card-text>
 				<v-form class="px-3" ref="newAssetForm">
-					<v-text-field label="Asset Id" v-model="assetId" prepend-icon="folder" v-bind:rules="inputRules"></v-text-field>
-					<v-text-field label="Serial Number" v-model="serialNumber" prepend-icon="folder" v-bind:rules="inputRules"></v-text-field>
+					<v-text-field label="Asset Id" v-model="asset.assetId" prepend-icon="folder" v-bind:rules="inputRules"></v-text-field>
+					<v-text-field label="Serial Number" v-model="asset.serialNumber" prepend-icon="folder" v-bind:rules="inputRules"></v-text-field>
 					<v-menu max-width="290px">
 						<template v-slot:activator="{ on }">
 							<v-text-field v-bind:value="formattedInstallDate" v-bind:rules="inputRules" label="Installation date" prepend-icon="date_range" v-on="on"></v-text-field>
 						</template>
-						<v-date-picker v-model="dateOfInstall"></v-date-picker>
+						<v-date-picker v-model="asset.dateOfInstall"></v-date-picker>
 					</v-menu>
-					<v-text-field label="Address" v-model="address" prepend-icon="house" v-bind:rules="inputRules"></v-text-field>
-					<v-textarea label="Description" v-model="description" prepend-icon="edit" v-bind:rules="inputRules"></v-textarea>
+					<v-text-field label="Address" v-model="asset.address" prepend-icon="house" v-bind:rules="inputRules"></v-text-field>
+					<v-textarea label="Description" v-model="asset.description" prepend-icon="edit" v-bind:rules="inputRules"></v-textarea>
 					<v-select
-						v-model="maintenanceSchedule"
+						v-model="asset.maintenanceSchedule"
 						v-bind:items="schedule"
 						menu-props="auto"
 						label="Maintenance Schedule"
@@ -32,10 +32,10 @@
 						<template v-slot:activator="{ on }">
 							<v-text-field v-bind:value="formattedScheduledDate" v-bind:rules="inputRules" label="Scheduled maintenance date" prepend-icon="date_range" v-on="on"></v-text-field>
 						</template>
-						<v-date-picker v-model="nextScheduledDate"></v-date-picker>
+						<v-date-picker v-model="asset.nextScheduledDate"></v-date-picker>
 					</v-menu>
 					<v-spacer></v-spacer>
-					<v-btn text class="success mx-0 mt-3" @click="submitNewAsset" v-bind:loading="loading">Add Asset</v-btn>
+					<v-btn text class="success mx-0 mt-3" @click="submitNewProject" v-bind:loading="loading">Add Asset</v-btn>
 				</v-form>
 			</v-card-text>
 		</v-card>
@@ -45,19 +45,21 @@
 <script>
 import format from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
-import AssetService from '@/Services'
+import { mapActions } from 'vuex'
 
 export default {
 	data() {
 		return {
 			dialog: false,
-			assetId: '',
-			serialNumber: '',
-			dateOfInstall: null,
-			address: '',
-			description: '',
-			maintenanceSchedule: '',
-			nextScheduledDate: null,
+			asset: {
+				assetId: '',
+				serialNumber: '',
+				dateOfInstall: null,
+				address: '',
+				description: '',
+				maintenanceSchedule: '',
+				nextScheduledDate: null,
+			},
 			inputRules: [
 				value => value.length >= 3 || 'Minimum length is 3 characters.'
 			],
@@ -66,32 +68,32 @@ export default {
 		}
 	},
 	methods: {
-		async submitNewAsset() {
+		...mapActions(['addAsset']),
+		async submitNewProject() {
 			if (this.$refs.newAssetForm.validate()) {
 				this.loading = true
-				const asset = {
-					assetId: this.assetId,
-					serialNumber: this.serialNumber,
-					dateOfInstall: format(parseISO(this.dateOfInstall), 'yyyy/MM/dd'),
-					address: this.address,
-					description: this.description,
-					maintenanceSchedule: this.maintenanceSchedule,
-					nextScheduledDate: format(parseISO(this.nextScheduledDate), 'yyyy/MM/dd'),
+				const newAsset = {
+					assetId: this.asset.assetId,
+					serialNumber: this.asset.serialNumber,
+					dateOfInstall: format(parseISO(this.asset.dateOfInstall), 'yyyy/MM/dd'),
+					address: this.asset.address,
+					description: this.asset.description,
+					maintenanceSchedule: this.asset.maintenanceSchedule,
+					nextScheduledDate: format(parseISO(this.asset.nextScheduledDate), 'yyyy/MM/dd'),
 				}
-				await AssetService.createAsset(asset).then(() => {
+				await this.addAsset(newAsset).then(() => {
 					this.loading = false
 					this.dialog = false
-					this.$emit('newAssetAdded')
 				})
 			}
-		}
+		},
 	},
 	computed: {
 		formattedInstallDate() {
-			return this.dateOfInstall ? format(parseISO(this.dateOfInstall), 'yyyy/MM/dd') : ''
+			return this.asset.dateOfInstall ? format(parseISO(this.asset.dateOfInstall), 'yyyy/MM/dd') : ''
 		},
 		formattedScheduledDate() {
-			return this.nextScheduledDate ? format(parseISO(this.nextScheduledDate), 'yyyy/MM/dd') : ''
+			return this.asset.nextScheduledDate ? format(parseISO(this.asset.nextScheduledDate), 'yyyy/MM/dd') : ''
 		},
 	}
 }

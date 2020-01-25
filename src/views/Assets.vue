@@ -27,8 +27,8 @@
 
 			<p class="error" v-if="error">{{ error }}</p>
 
-			<v-card depressed v-for="asset in assets" v-bind:key="asset.assetId">
-				<Asset @newAssetAdded="reloadAssets" v-bind:asset="asset" />
+			<v-card depressed v-for="asset in allAssets" v-bind:key="asset.assetId">
+				<Asset v-bind:asset="asset" />
 				<v-divider></v-divider>
 			</v-card>
 		</v-container>
@@ -37,35 +37,28 @@
 
 <script>
 import Asset from '@/components/Asset'
-import AssetService from '@/Services'
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
 	name: 'Assets',
 	components: {
 		Asset
 	},
+	computed: {
+		...mapGetters(['allAssets']),
+		assets() {
+			return this.fetchAssets()
+		}
+	},
 	data() {
 		return {
-			assets: [],
 			error: ''
 		}
 	},
 	methods: {
+		...mapActions(['fetchAssets']),
 		sortBy(property) {
 			this.assets.sort((a, b) => a[property] < b[property] ? -1 : 1)
-		},
-		async reloadAssets() {
-			try {
-				this.assets = await AssetService.getAssets()
-			} catch (error) {
-				this.error = error.message
-			}
-		}
-	},
-	async created() {
-		try {
-			this.assets = await AssetService.getAssets()
-		} catch (error) {
-			this.error = error.message
 		}
 	},
 }

@@ -9,8 +9,6 @@ class AssetService {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const response = await axios.get(url);
-				// eslint-disable-next-line no-console
-				console.log(response.data)
 				resolve(response.data);
 			} catch(error) {
 				reject(error);
