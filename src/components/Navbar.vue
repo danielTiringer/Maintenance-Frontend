@@ -13,7 +13,7 @@
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
 
-			<v-menu offset-y>
+			<v-menu offset-y v-if="this.userIsAuthenticated">
 				<template v-slot:activator="{ on }">
 					<v-btn color="primary" class="mr-3" dark v-on="on">
 					<v-icon left>expand_more</v-icon>
@@ -27,9 +27,9 @@
 				</v-list>
 			</v-menu>
 
-			<v-btn depressed color="primary">
-				<span>Sign Out</span>
-				<v-icon right>exit_to_app</v-icon>
+			<v-btn depressed color="item.color" v-for="item in menuItems" v-bind:key="item.text">
+				<span>{{ item.text }}</span>
+				<v-icon right>{{ item.icon }}</v-icon>
 			</v-btn>
 		</v-toolbar>
 
@@ -67,10 +67,28 @@ export default {
 		return {
 			drawer: false,
 			links: [
-				{ icon: 'dashboard', text: 'Asset List', route: '/' },
+				{ icon: 'dashboard', text: 'Asset List', route: '/assets' },
+				{ icon: 'person', text: 'Client List', route: '/clients' },
 				{ icon: 'assessment', text: 'Metrics', route: '/metrics' },
 			],
 			snackbar: false
+		}
+	},
+	computed: {
+		menuItems () {
+			let menuItems = [
+				{ color: 'primary', text: 'Sign In', icon: 'lock_open' },
+				{ color: 'primary', text: 'Register', icon: 'face' }
+			]
+			if (this.userIsAuthenticated) {
+				menuItems = [
+					{ color: 'primary', text: 'Sign Out', icon: 'exit_to_app' },
+				]
+			}
+			return menuItems
+		},
+		userIsAuthenticated () {
+			return this.$store.getters.user !== null && this.$store.getters.user !== undefined
 		}
 	}
 }

@@ -1,15 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Signup from '../views/Signup.vue'
 import Assets from '../views/Assets.vue'
+import Clients from '../views/Clients.vue'
 import Metrics from '../views/Metrics.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/signup',
+    name: 'signup',
+    component: Signup
+  },
+  {
+    path: '/assets',
     name: 'assets',
     component: Assets
+  },
+  {
+    path: '/clients',
+    name: 'clients',
+    component: Clients
   },
   {
     path: '/metrics',
