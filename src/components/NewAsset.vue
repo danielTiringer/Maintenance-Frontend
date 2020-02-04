@@ -13,7 +13,7 @@
 					<v-text-field label="Serial Number" v-model="asset.serialNumber" prepend-icon="folder" v-bind:rules="inputRules"></v-text-field>
 					<v-menu max-width="290px">
 						<template v-slot:activator="{ on }">
-							<v-text-field v-bind:value="formattedInstallDate" v-bind:rules="inputRules" label="Installation date" prepend-icon="date_range" v-on="on"></v-text-field>
+							<v-text-field v-bind:value="formattedInstallDate" label="Installation date" prepend-icon="date_range" v-on="on"></v-text-field>
 						</template>
 						<v-date-picker v-model="asset.dateOfInstall"></v-date-picker>
 					</v-menu>
@@ -30,7 +30,7 @@
 					></v-select>
 					<v-menu max-width="290px">
 						<template v-slot:activator="{ on }">
-							<v-text-field v-bind:value="formattedScheduledDate" v-bind:rules="inputRules" label="Scheduled maintenance date" prepend-icon="date_range" v-on="on"></v-text-field>
+							<v-text-field v-bind:value="formattedScheduledDate" label="Scheduled maintenance date" prepend-icon="date_range" v-on="on"></v-text-field>
 						</template>
 						<v-date-picker v-model="asset.nextScheduledDate"></v-date-picker>
 					</v-menu>
