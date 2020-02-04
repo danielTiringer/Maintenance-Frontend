@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let url = 'http://localhost:5000/api/assets/';
+let url = 'api/assets/';
 
 class AssetService {
 	// Get Assets

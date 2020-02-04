@@ -1,5 +1,4 @@
-import AssetService from '@/Services'
-import axios from 'axios'
+import AssetService from '@/services/Assetservices'
 
 const state = {
 	assets: []
@@ -15,8 +14,7 @@ const actions = {
 		commit('setAssets', response)
 	},
 	async addAsset({ commit }, asset) {
-		// const response = await AssetService.createAsset(asset)
-		const response = await axios.post('http://localhost:5000/api/assets/', asset)
+		const response = await AssetService.createAsset(asset)
 		commit('newAsset', response)
 	},
 	async removeAsset({ commit }, id) {
