@@ -32,17 +32,20 @@
 				<v-divider></v-divider>
 			</v-card>
 		</v-container>
+		<NewAsset />
 	</div>
 </template>
 
 <script>
 import Asset from '@/components/Asset'
+import NewAsset from '@/components/NewAsset'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
 	name: 'Assets',
 	components: {
-		Asset
+		Asset,
+		NewAsset
 	},
 	computed: {
 		...mapGetters(['allAssets']),
