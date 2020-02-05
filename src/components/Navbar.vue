@@ -35,11 +35,6 @@
 
 		<v-navigation-drawer app v-model="drawer" class="primary">
 			<v-app-bar-nav-icon class="grey--text mt-2 ml-2" @click="drawer = !drawer"></v-app-bar-nav-icon>
-			<v-layout column align-center>
-				<v-flex class="mt-4 mt-3">
-					<NewAsset @newAssetAdded="snackbar = true" />
-				</v-flex>
-			</v-layout>
 			<v-list class="primary d-flex flex-column">
 				<v-list-item class="ma-3" v-for="link in links" v-bind:key="link.text">
 					<router-link v-bind:to="link.route" class="d-flex flex-row">
@@ -58,10 +53,9 @@
 </template>
 
 <script>
-import NewAsset from './NewAsset'
 export default {
+	name: 'Navbar',
 	components: {
-		NewAsset
 	},
 	data() {
 		return {
@@ -77,12 +71,12 @@ export default {
 	computed: {
 		menuItems () {
 			let menuItems = [
-				{ color: 'primary', text: 'Sign In', icon: 'lock_open', route: '/signin' },
-				{ color: 'primary', text: 'Register', icon: 'face', route: '/signup' }
+				{ color: 'primary', text: 'Sign In', icon: 'mdi-login-variant', route: '/signin' },
+				{ color: 'primary', text: 'Register', icon: 'mdi-arrow-up-bold-box-outline', route: '/signup' }
 			]
 			if (this.userIsAuthenticated) {
 				menuItems = [
-					{ color: 'primary', text: 'Sign Out', icon: 'exit_to_app' },
+					{ color: 'primary', text: 'Sign Out', icon: 'mdi-logout-variant' },
 				]
 			}
 			return menuItems

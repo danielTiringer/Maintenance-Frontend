@@ -49,14 +49,6 @@
 		</v-layout>
 		</v-flex>
 		<v-flex column xs1 sm1 md1 class="pa-2 my-auto">
-			<div class="buttons" @click="addContact(asset._id)">
-				<v-tooltip top>
-					<template v-slot:activator="{ on }">
-						<v-icon v-on="on" color="grey">person_add</v-icon>
-					</template>
-					<span>Add contact</span>
-				</v-tooltip>
-			</div>
 			<div class="buttons" @click="addMaintenance(asset._id)">
 				<v-tooltip top>
 					<template v-slot:activator="{ on }">

@@ -1,7 +1,9 @@
 <template>
 	<v-dialog max-width="600px" v-model="dialog">
 		<template v-slot:activator="{ on }">
-			<v-btn text class="success" v-on="on">Add new asset</v-btn>
+			<v-btn text class="red" v-on="on" fab large dark absolute right>
+				<v-icon>mdi-plus</v-icon>
+			</v-btn>
 		</template>
 		<v-card>
 			<v-card-title>
@@ -17,6 +19,8 @@
 						</template>
 						<v-date-picker v-model="asset.dateOfInstall"></v-date-picker>
 					</v-menu>
+					<v-text-field label="Postal Code" v-model="asset.zip" prepend-icon="mdi-earth" v-bind:rules="inputRules"></v-text-field>
+					<v-text-field label="City" v-model="asset.city" prepend-icon="mdi-city" v-bind:rules="inputRules"></v-text-field>
 					<v-text-field label="Address" v-model="asset.address" prepend-icon="house" v-bind:rules="inputRules"></v-text-field>
 					<v-textarea label="Description" v-model="asset.description" prepend-icon="edit" v-bind:rules="inputRules"></v-textarea>
 					<v-select
@@ -48,6 +52,7 @@ import parseISO from 'date-fns/parseISO'
 import { mapActions } from 'vuex'
 
 export default {
+	name: 'NewAsset',
 	data() {
 		return {
 			dialog: false,
@@ -55,6 +60,8 @@ export default {
 				assetId: '',
 				serialNumber: '',
 				dateOfInstall: null,
+				zip: '',
+				city: '',
 				address: '',
 				description: '',
 				maintenanceSchedule: '',
@@ -76,6 +83,8 @@ export default {
 					assetId: this.asset.assetId,
 					serialNumber: this.asset.serialNumber,
 					dateOfInstall: format(parseISO(this.asset.dateOfInstall), 'yyyy/MM/dd'),
+					zip: this.asset.zip,
+					city: this.asset.city,
 					address: this.asset.address,
 					description: this.asset.description,
 					maintenanceSchedule: this.asset.maintenanceSchedule,
