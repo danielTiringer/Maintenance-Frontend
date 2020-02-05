@@ -13,6 +13,10 @@ const actions = {
 		// eslint-disable-next-line no-console
 		console.log(commit, payload)
 	},
+	async signUserIn({ commit }, payload) {
+		// eslint-disable-next-line no-console
+		console.log(commit, payload)
+	},
 };
 
 const mutations = {

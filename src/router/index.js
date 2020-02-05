@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Signup from '../views/Signup.vue'
+import Signin from '../views/Signin.vue'
 import Assets from '../views/Assets.vue'
 import Clients from '../views/Clients.vue'
 import Metrics from '../views/Metrics.vue'
@@ -13,6 +14,11 @@ const routes = [
     name: 'signup',
     component: Signup
   },
+  {
+    path: '/signin',
+    name: 'signin',
+    component: Signin
+	},
   {
     path: '/assets',
     name: 'assets',

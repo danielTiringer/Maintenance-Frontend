@@ -27,7 +27,7 @@
 				</v-list>
 			</v-menu>
 
-			<v-btn depressed color="item.color" v-for="item in menuItems" v-bind:key="item.text">
+			<v-btn depressed color="item.color" v-for="item in menuItems" v-bind:key="item.text" router :to="item.route">
 				<span>{{ item.text }}</span>
 				<v-icon right>{{ item.icon }}</v-icon>
 			</v-btn>
@@ -77,8 +77,8 @@ export default {
 	computed: {
 		menuItems () {
 			let menuItems = [
-				{ color: 'primary', text: 'Sign In', icon: 'lock_open' },
-				{ color: 'primary', text: 'Register', icon: 'face' }
+				{ color: 'primary', text: 'Sign In', icon: 'lock_open', route: '/signin' },
+				{ color: 'primary', text: 'Register', icon: 'face', route: '/signup' }
 			]
 			if (this.userIsAuthenticated) {
 				menuItems = [
