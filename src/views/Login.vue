@@ -5,7 +5,7 @@
 				<v-card>
 					<v-card-text>
 						<v-container>
-							<form @submit.prevent="onSignup">
+							<form @submit.prevent="loginUser">
 								<v-layout row>
 									<v-flex xs12>
 										<v-text-field
@@ -31,21 +31,11 @@
 									</v-flex>
 								</v-layout>
 								<v-layout row>
-									<v-flex xs12>
-										<v-text-field
-											name="confirmPassword"
-											label="Confirm Password"
-											id="confirmPassword"
-											v-model="confirmPassword"
-											type="confirmPassword"
-											:rules="[comparePasswords]"
-										>
-										</v-text-field>
+									<v-flex xs12 sm6 md3>
+										<v-btn type="submit">Login</v-btn>
 									</v-flex>
-								</v-layout>
-								<v-layout row>
-									<v-flex xs12>
-										<v-btn type="submit">Sign Up</v-btn>
+									<v-flex xs12 sm6 md3 class="pa-2">
+										<router-link to="/register">Register</router-link>
 									</v-flex>
 								</v-layout>
 							</form>
@@ -58,18 +48,17 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
+	name: 'Login',
 	data() {
 		return {
 			email: '',
 			password: '',
-			confirmPassword: ''
 		}
 	},
 	computed: {
-		comparePasswords() {
-			return this.password !== this.confirmPassword ? 'The passwords do not match!' : ''
-		},
 		user() {
 			return this.$store.getters.user
 		}
@@ -82,8 +71,21 @@ export default {
 		}
 	},
 	methods: {
-		onSignup() {
-			this.$store.dispatch('signUserUp', { email: this.email, password: this.password, confirmPassword: this.confirmPassword })
+		...mapActions(['login']),
+		loginUser() {
+			let user = {
+				email: this.email,
+				password: this.password
+			}
+			this.login(user)
+				.then(res => {
+					if (res.data.success) {
+						this.$router.push('/assets')
+					}
+				}).catch(err => {
+					// eslint-disable-next-line no-console
+					console.log(err)
+				})
 		}
 	}
 }

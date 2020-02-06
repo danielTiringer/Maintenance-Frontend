@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Signup from '../views/Signup.vue'
-import Signin from '../views/Signin.vue'
+import Register from '../views/Register.vue'
+import Login from '../views/Login.vue'
 import Assets from '../views/Assets.vue'
 import Clients from '../views/Clients.vue'
 import Metrics from '../views/Metrics.vue'
@@ -10,14 +10,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/signup',
-    name: 'signup',
-    component: Signup
+    path: '/register',
+    name: 'register',
+    component: Register
   },
   {
-    path: '/signin',
-    name: 'signin',
-    component: Signin
+    path: '/login',
+    name: 'login',
+    component: Login
 	},
   {
     path: '/assets',

@@ -13,7 +13,7 @@
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
 
-			<v-menu offset-y v-if="this.userIsAuthenticated">
+			<v-menu offset-y v-if="this.isLoggedIn">
 				<template v-slot:activator="{ on }">
 					<v-btn color="primary" class="mr-3" dark v-on="on">
 					<v-icon left>expand_more</v-icon>
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
 	name: 'Navbar',
 	components: {
@@ -69,21 +71,19 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters(['isLoggedIn']),
 		menuItems () {
 			let menuItems = [
-				{ color: 'primary', text: 'Sign In', icon: 'mdi-login-variant', route: '/signin' },
-				{ color: 'primary', text: 'Register', icon: 'mdi-arrow-up-bold-box-outline', route: '/signup' }
+				{ color: 'primary', text: 'Login', icon: 'mdi-login-variant', route: '/login' },
+				{ color: 'primary', text: 'Register', icon: 'mdi-arrow-up-bold-box-outline', route: '/register' }
 			]
-			if (this.userIsAuthenticated) {
+			if (this.isLoggedIn) {
 				menuItems = [
-					{ color: 'primary', text: 'Sign Out', icon: 'mdi-logout-variant' },
+					{ color: 'primary', text: 'Logout', icon: 'mdi-logout-variant', route: '/login' },
 				]
 			}
 			return menuItems
 		},
-		userIsAuthenticated () {
-			return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-		}
 	}
 }
 </script>

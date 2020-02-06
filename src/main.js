@@ -10,6 +10,15 @@ Vue.component('apexchart', VueApexCharts)
 
 Vue.config.productionTip = false
 
+// Set up Vue's default HTTP modules for API calls
+Vue.prototype.$http = axios;
+// Load the Token from Local Storage
+const token = localStorage.getItem('token');
+// If token exists, append it to axios header by default
+if (token) {
+	Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
+}
+
 new Vue({
 	store,
   router,

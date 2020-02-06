@@ -51,6 +51,9 @@ export default {
 			this.assets.sort((a, b) => a[property] < b[property] ? -1 : 1)
 		}
 	},
+	mounted() {
+		this.fetchClients()
+	}
 }
 </script>
 

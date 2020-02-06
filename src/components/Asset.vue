@@ -16,37 +16,21 @@
 				</v-flex>
 				<v-flex xs6 sm3 m2>
 					<div class="caption grey--text">Address</div>
-					<div>{{ asset.address }}</div>
+					<div>{{ asset.zip }} {{ asset.city }}, {{ asset.address }}</div>
 				</v-flex>
 				<v-flex xs6 sm4 md3>
 					<div class="caption grey--text">Description</div>
 					<div>{{ asset.description }}</div>
 				</v-flex>
-				<v-flex xs6 sm6 m6>
-					<v-layout row wrap class="pa-2">
-						<v-flex xs4 sm4 m4>
-							<div class="caption grey--text" v-if="asset.contacts.length > 0">Contact Name</div>
-							<div v-if="asset.contacts.length > 0">{{ asset.contacts[0].name }}</div>
-						</v-flex>
-						<v-flex xs4 sm4 m4>
-							<div class="caption grey--text" v-if="asset.contacts.length > 0">Contact Phone</div>
-							<div v-if="asset.contacts.length > 0">{{ asset.contacts[0].phone }}</div>
-						</v-flex>
-					<v-flex xs4 sm4 m4>
-						<div class="caption grey--text" v-if="asset.contacts.length > 0">Contact Email</div>
-						<div v-if="asset.contacts.length > 0">{{ asset.contacts[0].email }}</div>
-					</v-flex>
-				</v-layout>
-			</v-flex>
-			<v-flex xs6 sm4 md2>
-				<div class="caption grey--text">Maintenance Schedule</div>
-				<div>{{ asset.maintenanceSchedule }}</div>
-			</v-flex>
-			<v-flex xs6 sm2 md2>
-				<div class="caption grey--text">Due By</div>
-				<div>{{ asset.nextScheduledDate }}</div>
-			</v-flex>
-		</v-layout>
+				<v-flex xs6 sm4 md2>
+					<div class="caption grey--text">Maintenance Schedule</div>
+					<div>{{ asset.maintenanceSchedule }}</div>
+				</v-flex>
+				<v-flex xs6 sm2 md2>
+					<div class="caption grey--text">Due By</div>
+					<div>{{ asset.nextScheduledDate }}</div>
+				</v-flex>
+			</v-layout>
 		</v-flex>
 		<v-flex column xs1 sm1 md1 class="pa-2 my-auto">
 			<div class="buttons" @click="addMaintenance(asset._id)">
