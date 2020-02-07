@@ -27,9 +27,23 @@
 				</v-list>
 			</v-menu>
 
-			<v-btn depressed color="item.color" v-for="item in menuItems" v-bind:key="item.text" router :to="item.route">
-				<span>{{ item.text }}</span>
-				<v-icon right>{{ item.icon }}</v-icon>
+			<router-link to="/register" class="nav-link" v-if="!this.isLoggedIn">
+				<v-btn depressed color="primary">
+					<span>Register</span>
+					<v-icon right>mdi-arrow-up-bold-box-outline</v-icon>
+				</v-btn>
+			</router-link>
+
+			<router-link to="/login" class="nav-link" v-if="!this.isLoggedIn">
+				<v-btn depressed color="primary">
+					<span>Login</span>
+					<v-icon right>mdi-login-variant</v-icon>
+				</v-btn>
+			</router-link>
+
+			<v-btn depressed color="primary" @click.prevent="logoutUser" v-if="this.isLoggedIn">
+				<span>Logout</span>
+				<v-icon right>mdi-logout-variant</v-icon>
 			</v-btn>
 		</v-toolbar>
 
@@ -53,7 +67,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
 	name: 'Navbar',
@@ -72,18 +86,12 @@ export default {
 	},
 	computed: {
 		...mapGetters(['isLoggedIn']),
-		menuItems () {
-			let menuItems = [
-				{ color: 'primary', text: 'Login', icon: 'mdi-login-variant', route: '/login' },
-				{ color: 'primary', text: 'Register', icon: 'mdi-arrow-up-bold-box-outline', route: '/register' }
-			]
-			if (this.isLoggedIn) {
-				menuItems = [
-					{ color: 'primary', text: 'Logout', icon: 'mdi-logout-variant', route: '/login' },
-				]
-			}
-			return menuItems
-		},
+	},
+	methods: {
+		...mapActions(['logout']),
+		logoutUser() {
+			this.logout()
+		}
 	}
 }
 </script>

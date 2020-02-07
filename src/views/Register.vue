@@ -5,7 +5,7 @@
 				<v-card>
 					<v-card-text>
 						<v-container>
-							<form @submit.prevent="onSignup">
+							<form @submit.prevent="registerUser">
 								<v-layout row>
 									<v-flex xs12>
 										<v-text-field
@@ -59,9 +59,9 @@
 										<v-text-field
 											name="confirmPassword"
 											label="Confirm Password"
-											id="confirmPassword"
-											v-model="confirmPassword"
-											type="confirmPassword"
+											id="confirm_password"
+											v-model="confirm_password"
+											type="confirm_password"
 											:rules="[comparePasswords]"
 										>
 										</v-text-field>
@@ -82,6 +82,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
 	data() {
 		return {
@@ -89,32 +91,30 @@ export default {
 			name: '',
 			email: '',
 			password: '',
-			confirmPassword: ''
+			confirm_password: ''
 		}
 	},
 	computed: {
 		comparePasswords() {
-			return this.password !== this.confirmPassword ? 'The passwords do not match!' : ''
+			return this.password !== this.confirm_password ? 'The passwords do not match!' : ''
 		},
-		user() {
-			return this.$store.getters.user
-		}
-	},
-	watch: {
-		user (value) {
-			if (value !== null && value !== undefined) {
-				this.$router.push('/assets')
-			}
-		}
 	},
 	methods: {
-		onSignup() {
-			this.$store.dispatch('signUserUp', {
+		...mapActions(['register']),
+		registerUser() {
+			let user = {
 				username: this.username,
 				name: this.name,
 				email: this.email,
 				password: this.password,
-				confirmPassword: this.confirmPassword })
+				confirm_password: this.confirm_password
+			}
+			this.register(user)
+				.then(res => {
+					if (res.data.success) {
+						this.$router.push('login')
+					}
+				})
 		}
 	}
 }
