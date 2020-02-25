@@ -1,0 +1,32 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+- stable
+
+services:
+- docker
+
+notifications:
+  email:
+    recipients:
+    - tiringerdaniel@gmail.com
+    on_success: change
+    on_failure: always
+
+before_script:
+- npm install
+
+script:
+- npm run lint
+
+after_success:
+  if [ "$TRAVIS_BRANCH" == "master" ]; then
+
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
+
+    export REPO=danieltiringer/maintenance-fontend;
+    docker build -f Dockerfile -t $REPO .;
+    docker push $REPO;
+  fi
+
