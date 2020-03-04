@@ -22,20 +22,20 @@
 				<v-divider></v-divider>
 			</v-card>
 		</v-container>
-		<NewClient />
+		<ClientForm />
 	</div>
 </template>
 
 <script>
 import Client from '@/components/Client'
-import NewClient from '@/components/NewClient'
+import ClientForm from '@/components/ClientForm'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
 	name: 'Clients',
 	components: {
 		Client,
-		NewClient
+		ClientForm
 	},
 	computed: {
 		...mapGetters(['allClients']),

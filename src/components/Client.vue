@@ -13,7 +13,9 @@
 								<v-flex xs12 sm6 md3>
 									<v-list-item-content>
 										<v-list-item-title class="caption grey--text">Contact Address</v-list-item-title>
-										<v-list-item-subtitle>{{ contact.zip }} {{ contact.city }}, {{ contact.address }}</v-list-item-subtitle>
+										<v-list-item-subtitle>
+											{{ contact.zip }} {{ contact.city }}, {{ contact.address }}
+										</v-list-item-subtitle>
 									</v-list-item-content>
 								</v-flex>
 								<v-flex xs12 sm6 md3>

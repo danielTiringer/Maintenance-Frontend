@@ -90,62 +90,47 @@
 </template>
 
 <script>
-import format from 'date-fns/format'
-import parseISO from 'date-fns/parseISO'
 import { mapActions } from 'vuex'
 
 export default {
-	name: 'NewAsset',
+	name: 'NewContact',
 	data() {
 		return {
 			dialog: false,
-			asset: {
-				assetId: '',
-				serialNumber: '',
-				dateOfInstall: null,
+			contact: {
+				name: '',
+				title: '',
 				zip: '',
 				city: '',
 				address: '',
-				description: '',
-				maintenanceSchedule: '',
-				nextScheduledDate: null,
+				phone: '',
+				email: '',
 			},
 			inputRules: [
 				value => value.length >= 3 || 'Minimum length is 3 characters.'
 			],
 			loading: false,
-			schedule: ['semi-annual', 'annual']
 		}
 	},
 	methods: {
-		...mapActions(['addAsset']),
+		...mapActions(['addContact']),
 		async submitNewProject() {
 			if (this.$refs.newAssetForm.validate()) {
 				this.loading = true
-				const newAsset = {
-					assetId: this.asset.assetId,
-					serialNumber: this.asset.serialNumber,
-					dateOfInstall: format(parseISO(this.asset.dateOfInstall), 'yyyy/MM/dd'),
-					zip: this.asset.zip,
-					city: this.asset.city,
-					address: this.asset.address,
-					description: this.asset.description,
-					maintenanceSchedule: this.asset.maintenanceSchedule,
-					nextScheduledDate: format(parseISO(this.asset.nextScheduledDate), 'yyyy/MM/dd'),
+				const newContact = {
+					name: this.contact.name,
+					title: this.contact.title,
+					zip: this.contact.zip,
+					city: this.contact.city,
+					address: this.contact.address,
+					phone: this.contact.phone,
+					email: this.contact.email,
 				}
-				await this.addAsset(newAsset).then(() => {
+				await this.addContact(newContact).then(() => {
 					this.loading = false
 					this.dialog = false
 				})
 			}
-		},
-	},
-	computed: {
-		formattedInstallDate() {
-			return this.asset.dateOfInstall ? format(parseISO(this.asset.dateOfInstall), 'yyyy/MM/dd') : ''
-		},
-		formattedScheduledDate() {
-			return this.asset.nextScheduledDate ? format(parseISO(this.asset.nextScheduledDate), 'yyyy/MM/dd') : ''
 		},
 	}
 }
