@@ -7,7 +7,7 @@ import store from '@/store'
 import VueApexCharts from 'vue-apexcharts'
 
 Vue.component('apexchart', VueApexCharts)
-
+Vue.use(VueApexCharts)
 Vue.config.productionTip = false
 
 // Set up Vue's default HTTP modules for API calls
