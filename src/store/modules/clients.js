@@ -13,11 +13,13 @@ const actions = {
 
 	async fetchClients({ commit }) {
 		const response = await ClientService.getClients()
-		commit('setClients', response)
+		commit('setClients', response.data)
 	},
 	async addClient({ commit }, client) {
 		const response = await ClientService.createClient(client)
-		commit('newClient', response)
+		// eslint-disable-next-line
+		console.log(response)
+		commit('newClient', response.data)
 	},
 	async removeClient({ commit }, id) {
 		await ClientService.deleteClient(id)

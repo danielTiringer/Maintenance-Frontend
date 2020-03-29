@@ -20,7 +20,14 @@ class ClientService {
 	// Create Client
 
 	static createClient(object) {
-		return axios.post(url, object);
+		return new Promise(async (resolve, reject) => {
+			try {
+				const response = await axios.post(url, object);
+				resolve(response);
+			} catch(error) {
+				reject(error);
+			}
+		});
 	}
 
 	// Delete Client

@@ -4,7 +4,6 @@ let url = 'api/assets/';
 
 class AssetService {
 	// Get Assets
-
 	static getAssets() {
 		return new Promise(async (resolve, reject) => {
 			try {
@@ -17,20 +16,25 @@ class AssetService {
 	}
 
 	// Create Asset
-
 	static createAsset(object) {
-		return axios.post(url, object);
+		return new Promise(async (resolve, reject) => {
+			try {
+				const response = await axios.post(url, object);
+				resolve(response.data);
+			} catch(error) {
+				reject(error);
+			}
+		});
 	}
 
 	// Delete Asset
-
 	static deleteAsset(id) {
 		return axios.delete(`${url}${id}`);
 	}
 
 	// Update Asset
-	static updateAsset(id, content) {
-		return axios.put(`${url}${id}`, content);
+	static updateAsset(object) {
+		return axios.put(`${url}${object._id}`, object);
 	}
 
 	// Complete Asset
